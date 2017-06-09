@@ -27,7 +27,7 @@ var vader = {
 
 var palpatine = {
 	name: "palpatine",
-	HP:450,
+	HP:50,
 	SP:130,
 	pic: "assets/images/palpatine.jpg",
 	fightPic: "assets/images/palpatineFight.png"
@@ -36,7 +36,7 @@ var palpatine = {
 
 var obiwan = {
 	name: "obiwan",
-	HP:700,
+	HP:50,
 	SP:100,
 	pic: "assets/images/obiwan.jpg",
 	fightPic: "assets/images/obiwanFight.png"
@@ -44,7 +44,7 @@ var obiwan = {
 
 var maul = {
 	name: "maul",
-	HP:500,
+	HP:50,
 	SP:100,
 	pic: "assets/images/maul.png",
 	fightPic: "assets/images/maulFight.png"
@@ -180,30 +180,32 @@ function saberAttack(userChar,enemyChar,startingStatUser,startingStatEnemy,curre
 
 	if(turn === 1){
 
-		if (startingStatUser[1] < userInitialSP){startingStatUser[1] += 3}
-
+		if (startingStatUser[1] < userInitialSP){startingStatUser[0] += 3}
 		startingStatEnemy[0] -= damage;
+
 
 		$('#enemyChar_health').html("HP:   "+ startingStatEnemy[0]);// console.log(+startingStatEnemy[0] +" "+currentEnemy + " " + damage)
 		$('#userChar_stamina').html("SP:   "+ startingStatUser[1]); 		
 		attackSound("clash");
 		damageDisplay(damage,"enemyChar")
-            damageArt("slashesD4","enemyChar")           
+        damageArt("slashesD4","enemyChar") 
+        return startingStatEnemy          
 	}
 
 	if(turn === 2){
 
-		if (startingStatEnemy[1] < userInitialSP){startingStatEnemy[0] += 3}
+		if (startingStatEnemy[1] < enemyInitialSP){startingStatEnemy[0] += 3}
 		startingStatUser[0] -= damage;
 
-		$('#userChar_health').html("HP:   "+ startingStatUser[0]); 
+		$('#userChar_health').html("HP:   "+ startingStatUser[0]); 	
 		$('#enemyChar_stamina').html("SP:   "+ startingStatEnemy[1]); 
+
 		attackSound("clash");
 		damageDisplay(damage,"userChar")
             damageArt("slashesD4","userChar")           		
 	}
 
-	checkHP(userChar,enemyChar,startingStatUser,startingStatEnemy,currentFight)
+	//checkHP(userChar,enemyChar,startingStatUser,startingStatEnemy,currentFight)
 
 }
 
@@ -211,10 +213,6 @@ function saberAttack(userChar,enemyChar,startingStatUser,startingStatEnemy,curre
 //////////////////////////////////////////////////////
 
 function forceThrow(userChar,enemyChar,startingStatUser,startingStatEnemy,currentFight){
-
-
-		console.log(userChar)
-		console.log(enemyChar)
 
 	var forceThrowArray = damageArray(forceThrow,100,200);
 	var damage = forceThrowArray[Math.floor(Math.random() * forceThrowArray.length)];
@@ -227,20 +225,17 @@ function forceThrow(userChar,enemyChar,startingStatUser,startingStatEnemy,curren
 
 	if(turn === 1){
 
-		if (startingStatUser[1] < 13){
-			saberAttack(userChar,enemyChar,startingStatUser,startingStatEnemy);
-			alert("Not Enough SP")
- 			return;
- 		}
 
  		startingStatUser[1] -= 13;	
 		startingStatEnemy[0] -= damage;
+
 
 		$('#enemyChar_health').html("HP:   "+ startingStatEnemy[0]);// console.log(+startingStatEnemy[0] +" "+currentEnemy + " " + damage)
 		$('#userChar_stamina').html("SP:   "+ startingStatUser[1]); 		
 		attackSound("force1");
 		damageDisplay(damage,"enemyChar")
-            $('.enemyChar_Pic').effect('shake');
+        $('.enemyChar_Pic').effect('shake');
+        return startingStatEnemy
 	}
 
 	if(turn === 2){
@@ -252,6 +247,7 @@ function forceThrow(userChar,enemyChar,startingStatUser,startingStatEnemy,curren
 
  		startingStatEnemy[1] -= 13;	
 		startingStatUser[0] -= damage;
+
 
 		$('#userChar_health').html("HP:   "+ startingStatUser[0]); 
 		$('#enemyChar_stamina').html("SP:   "+ startingStatEnemy[1]); 
@@ -280,7 +276,7 @@ function brawls(userChar,enemyChar,startingStatUser,startingStatEnemy,currentFig
 
 	if(turn === 1){
 
-		if (startingStatUser[1] < 3){damage = 0;damageDisplay(damage,"enemyChar");return;}
+		if (startingStatUser[1] < 3){damage = 0;damageDisplay(damage,"enemyChar");return startingStatEnemy;}
 		startingStatUser[1] -= 3;
 		startingStatEnemy[0] -= damage;
 
@@ -289,19 +285,19 @@ function brawls(userChar,enemyChar,startingStatUser,startingStatEnemy,currentFig
 	
 		damageDisplay(damage,"enemyChar")
         damageArt("redslash","enemyChar")
-
+        return startingStatEnemy
 	}
 
 	if(turn === 2){
 
-		if (startingStatEnemy[1] < 3){damage = 0}
+		if (startingStatEnemy[1] < 3){damage = 0; damageDisplay(damage,"enemyChar");return ;}
 
 		startingStatEnemy[1] -= 3;
 		startingStatUser[0] -= damage;
 
 		$('#userChar_health').html("HP:   "+ startingStatUser[0]); 
 		$('#enemyChar_stamina').html("SP:   "+ startingStatEnemy[1]); 
-	      damageDisplay(damage,"enemyChar")
+	      damageDisplay(damage,"userChar")
             damageArt("redslash","userChar")
 	}
 
@@ -315,10 +311,10 @@ function brawls(userChar,enemyChar,startingStatUser,startingStatEnemy,currentFig
 function randAttacks(userChar,enemyChar,startingStatUser,startingStatEnemy,currentFight){
 
 	var ind = Math.floor(Math.random() * 100) + 1;
-	if(ind < 15){
+	if(ind < 70){
 	 	forceThrow(userChar,enemyChar,startingStatUser,startingStatEnemy);
 	 }
-	if(ind >= 17 && ind <= 97){
+	if(ind >= 70 && ind <= 97){
 		saberAttack(userChar,enemyChar,startingStatUser,startingStatEnemy);
 	} 
 	if(ind >97){
@@ -377,7 +373,7 @@ function checkHP(userChar,enemyChar,startingStatUser,startingStatEnemy,currentFi
 		lose(); return}
 
 	if(startingStatEnemy[0] < 0){
-
+		start = false;
 		removeAttackOptions();
 		chooseBtn = '<button type="button" id="winBtn">YOU WIN!</button>';
 		$("#fightScreen").append(chooseBtn); 
@@ -435,10 +431,10 @@ function charScreen(userChar,allCharObj){
 // Replacing background music
 //////////////////////////////////////////////////////
 
-	$("#background").remove();
-	$("body").prepend('<audio controls autoplay hidden loop id="background">'
-		+'<source src="assets/audio/attack.mp3">'
-		+ '</audio>');
+	// $("#background").remove();
+	// $("body").prepend('<audio controls autoplay hidden loop id="background">'
+	// 	+'<source src="assets/audio/attack.mp3">'
+	// 	+ '</audio>');
 
 
 // Empty out game section
@@ -491,14 +487,14 @@ function charScreen(userChar,allCharObj){
 // 1st Click select user character
 //////////////////////////////////////////////////////
 		if(round === 1){	
-			if(userChar.length + enemyChar.length === 0){	
+			if(userChar.length === 0){	console.log(userChar.length)
 	  			$(this).parent().css('box-shadow', '0px 0px 30px white');
 	  			$(this).parent().css('border', '2px solid green');
 	  			$(this).css('opacity', '1');   		
 	   			$(this).attr('role','userChar');
 
 	  			userChar.push(allCharObj[this.id]);
-	  			userChar = userChar[0]
+	  			userChar = userChar[0];
 
 	  			$("#chooseBtn").remove();
 	  			chooseBtn = '<button type="button" id="chooseBtn">Choose Your Opponent!</button>';
@@ -508,14 +504,14 @@ function charScreen(userChar,allCharObj){
 // 2nd click select opponent character
 //////////////////////////////////////////////////////
 
-			else {
-				if(userChar.length + enemyChar.length === 2){return};
+			else { 
+				if(click > 2){return};
 				$(this).parent().css('box-shadow', '0px 0px 30px white');
 	  			$(this).parent().css('border', '2px solid red');
 	  			$(this).css('opacity', '1');   	
 	  			$(this).attr('role','enemyChar');
 	  			enemyChar.push(allCharObj[this.id]);
-	  			enemyChar = enemyChar[0]
+	  			enemyChar = enemyChar[0];
 
   				$("#chooseBtn").remove();
 				fightBtn = '<button type="button" id="fightBtn">Fight</button>';
@@ -524,6 +520,9 @@ function charScreen(userChar,allCharObj){
 		}
 
 		if(round > 1){
+
+			if(click == 2){return};
+
 			$(this).parent().css('box-shadow', '0px 0px 30px white');
   			$(this).parent().css('border', '2px solid red');
   			$(this).css('opacity', '1');   	
@@ -567,7 +566,7 @@ function charScreen(userChar,allCharObj){
 //////////////////////////////////////////////////////
 
 function fightScreen(userChar,enemyChar){
-	$("#background").remove();
+	//$("#background").remove();
 	var gameSect = $(".game");	
 	gameSect.attr("id","fightScreen")
 	gameSect.empty();
@@ -590,7 +589,6 @@ function fightScreen(userChar,enemyChar){
 //////////////////////////////////////////////////////
 	
 	function fightProfile(userChar,enemyChar){
-				console.log(currentFight)
 
 		var row = $('<div>');
 		row.addClass("row1");
@@ -706,7 +704,9 @@ function fightScreen(userChar,enemyChar){
 ///////////////////////////////////////////////////////////////////////
 
 function fighting(userChar,enemyChar){
-		console.log(userChar)
+		var start = true;
+	
+		console.log()
 		var startingStatUser = [];
 		startingStatUser.push(userChar.HP);
 		startingStatUser.push(userChar.SP);
@@ -715,30 +715,43 @@ function fighting(userChar,enemyChar){
 		startingStatEnemy.push(enemyChar.HP);
 		startingStatEnemy.push(enemyChar.SP);
 
+	if(start === true){ console.log(start)
+		$("#saber").click(function(){
+			selectedSaber(userChar,enemyChar);
+			console.log(startingStatEnemy)
+			return startingStatEnemy
+		})
 
-	$("#saber").click(function(){
-		selectedSaber(userChar,enemyChar);
-	})
+		$("#forceThrow").click(function(){
+			selectedForceThrow(userChar,enemyChar);
+		})
 
-	$("#forceThrow").click(function(){
-		selectedForceThrow(userChar,enemyChar);
-	})
-
-	$("#defend").click(function(){
-		selectedBrawls(userChar,enemyChar);
-	})
-
+		$("#defend").click(function(){
+			selectedBrawls(userChar,enemyChar);
+		})
+	}
 // Selected Saber Attacks
 //////////////////////////////////////////////////////
 
 	function selectedSaber(userChar,enemyChar){
 		$(".optionBtn").timedDisable();
+
+		if(startingStatUser[0] < 0){return}
+
 		turn = 1;
-		saberAttack(userChar,enemyChar,startingStatUser,startingStatEnemy,currentFight);		
+		saberAttack(userChar,enemyChar,startingStatUser,startingStatEnemy,currentFight);
+
+		checkHP(userChar,enemyChar,startingStatUser,startingStatEnemy,currentFight)
+
+		if(startingStatEnemy[0] < 0){return}
+
 		turn = 2;
 		setTimeout(function () {
 		randAttacks(userChar,enemyChar,startingStatUser,startingStatEnemy,currentFight);
 		},2000)
+
+		checkHP(userChar,enemyChar,startingStatUser,startingStatEnemy,currentFight)
+
 	}
 
 // Selected Force Throw Attacks
@@ -746,12 +759,23 @@ function fighting(userChar,enemyChar){
 
 	function selectedForceThrow(userChar,enemyChar){
 		$(".optionBtn").timedDisable();
+
+		if(startingStatUser[0] < 0){return}
+
 		turn = 1;
 		forceThrow(userChar,enemyChar,startingStatUser,startingStatEnemy,currentFight);
+
+		checkHP(userChar,enemyChar,startingStatUser,startingStatEnemy,currentFight)
+
+		if(startingStatEnemy[0] < 0){return}
+
 		turn = 2;
 		setTimeout(function () {
 			randAttacks(userChar,enemyChar,startingStatUser,startingStatEnemy,currentFight)
 		},2000)	
+
+		checkHP(userChar,enemyChar,startingStatUser,startingStatEnemy,currentFight)
+
 	}
 
 // Selected Duels Attack
@@ -768,14 +792,26 @@ function fighting(userChar,enemyChar){
 		var time = 500;
 
 		for(i = 0; i <=round;i++){
+
 			setTimeout(function () {
+
+				// if(!saberAttack()){return}
+				if(startingStatUser[0] < 0){return}
+				if(startingStatEnemy[0] < 0){return}
 				turn = 1;
 				brawls(userChar,enemyChar,startingStatUser,startingStatEnemy,currentFight);
 
-				turn = 2; 
+				checkHP(userChar,enemyChar,startingStatUser,startingStatEnemy,currentFight)
 
+					if(startingStatEnemy[0] < 0){return}			
+				if(startingStatUser[0] < 0){return}
+				turn = 2; 
 				brawls(userChar,enemyChar,startingStatUser,startingStatEnemy,currentFight)
 				},time);
+
+				checkHP(userChar,enemyChar,startingStatUser,startingStatEnemy,currentFight)
+
+
 			time +=500;
 		}
 
@@ -791,7 +827,7 @@ function fighting(userChar,enemyChar){
 
 function removeAttackOptions(){
 	$(".optionBtn").remove();
-	$(".row2").remove()
+	//$(".row2").remove()
 }
 // Initializing Layout
 //////////////////////////////////////////////////////
@@ -802,12 +838,15 @@ function win(userChar,enemyChar,currentFight){
 	userCharInd = allChar.indexOf(userChar);
 	enemyCharInd = allChar.indexOf(enemyChar);
 
-	allChar.splice(userCharInd,1);
+	if(round === 1){
+		allChar.splice(userCharInd,1);
+	}
 	allChar.splice(enemyCharInd,1);
 	delete allCharObj[enemyChar.name];
 	enemyChar = [];
+	console.log[currentFight]
 	userChar = currentFight[0];
-
+	
 	round++;
 	console.log("This round is " + round )
 	charScreen(userChar, allCharObj)
