@@ -244,3 +244,27 @@ body{background-image: url("../images/background.jpg");}
 	top:10px;
 	left:45px;
 }
+
+/*Win Screen CSS*/
+
+#winScreen{
+	height:400px;
+    background-image: url('../images/winBg.png');
+	opacity:1;
+}
+
+#winBtn{
+	position:absolute;
+	top:160px;
+	left:210px;
+	width:360px;
+	height:80px;
+	border:3px solid #ffe81f;
+	border-radius: 10px;
+	background: rgba(0,0,0,0.5);
+
+	font-size:50px;
+	font-weight:bold;
+	color: #fcdf2b;
+	opacity:1;
+}
