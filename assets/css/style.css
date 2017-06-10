@@ -268,3 +268,50 @@ body{background-image: url("../images/background.jpg");}
 	color: #fcdf2b;
 	opacity:1;
 }
+
+/*Finished Screen CSS*/
+
+#finishedScreen{
+	height:400px;
+    background-image: url('../images/finishedBg.jpg');
+	opacity:1;
+}
+
+#finishedBtn{
+	position:absolute;
+	top:25px;
+	left:25px;
+	width:750px;
+	height:350px;
+	border:3px solid #ffffff;
+	border-radius: 10px;
+	background: rgba(0,0,0,0.5);
+	padding: 20px 30px;
+
+	font-size:50px;
+	font-weight:bold;
+	color: #fcdf2b;
+	opacity:1;
+}
+
+
+#fightAgainBtn{
+	position:absolute;
+	top:300px;
+	left:270px;
+	width:250px;
+	height:50px;
+	border:3px solid #ffe81f;
+	border-radius: 10px;
+	background: rgba(0,0,0,0.5);
+
+	font-size:30px;
+	font-weight:bold;
+	color: #fcdf2b;
+	opacity:1;
+}
+
+#fightAgainBtn:hover{
+	opacity: 1;
+	box-shadow: 0px 0px 20px white;
+}
