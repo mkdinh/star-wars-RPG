@@ -67,7 +67,7 @@ var allCharObj = {
 	vader: vader,
 	maul: maul,
 }
-var allChar = [obiwan,luke]//,windu,palpatine,vader,maul];
+var allChar = [obiwan,luke,windu,palpatine,vader,maul];
 var totalRounds = allChar.length;
 
 //////////////////////////////////////////////////////////////////////////////////////
@@ -180,7 +180,7 @@ $.fn.timedDisable = function(time) {
 function saberAttack(userChar,enemyChar,startingStatUser,startingStatEnemy,currentFight){
 			console.log(startingStatUser)
 
-	var saberArray = damageArray(saber,20,40);
+	var saberArray = damageArray(saber,10,30);
 	var damage = saberArray[Math.floor(Math.random() * saberArray.length)];
 
 	var userInitialHP = userChar.HP;
@@ -228,7 +228,7 @@ function saberAttack(userChar,enemyChar,startingStatUser,startingStatEnemy,curre
 
 function forceThrow(userChar,enemyChar,startingStatUser,startingStatEnemy,currentFight){
 
-	var forceThrowArray = damageArray(forceThrow,40,80);
+	var forceThrowArray = damageArray(forceThrow,30,50);
 	var damage = forceThrowArray[Math.floor(Math.random() * forceThrowArray.length)];
 
 	var userInitialHP = userChar.HP;
@@ -286,7 +286,7 @@ function forceThrow(userChar,enemyChar,startingStatUser,startingStatEnemy,curren
 
 function brawls(userChar,enemyChar,startingStatUser,startingStatEnemy,currentFight){
 	
-	var brawlsArray = damageArray(brawls,1,40);
+	var brawlsArray = damageArray(brawls,1,30);
 	var damage = brawlsArray[Math.floor(Math.random() * brawlsArray.length)];
 
 	var userInitialHP = userChar.HP;
@@ -302,8 +302,6 @@ function brawls(userChar,enemyChar,startingStatUser,startingStatEnemy,currentFig
 
 		startingStatUser[1] -= 3;
 		startingStatEnemy[0] -= damage + (3*round);
-
-
 
 
 		$('#enemyChar_health').html("HP:   "+ startingStatEnemy[0]);// console.log(+startingStatEnemy[0] +" "+currentEnemy + " " + damage)
@@ -484,10 +482,10 @@ function charScreen(userChar,allCharObj){
 // Replacing background music
 //////////////////////////////////////////////////////
 
-	// $("#background").remove();
-	// $("body").prepend('<audio controls autoplay hidden loop id="background">'
-	// 	+'<source src="assets/audio/attack.mp3">'
-	// 	+ '</audio>');
+	$("#background").remove();
+	$("body").prepend('<audio controls autoplay hidden loop id="background">'
+		+'<source src="assets/audio/attack.mp3">'
+		+ '</audio>');
 
 
 // Empty out game section
@@ -622,7 +620,7 @@ function charScreen(userChar,allCharObj){
 //////////////////////////////////////////////////////
 
 function fightScreen(userChar,enemyChar){
-	//$("#background").remove();
+	$("#background").remove();
 	var gameSect = $(".game");	
 	gameSect.attr("id","fightScreen")
 	gameSect.empty();
@@ -848,7 +846,7 @@ function fighting(userChar,enemyChar){
 
 		var time = 500;
 
-		for(i = 0; i <=duelRound;i++){
+		for(i = 1; i <= duelRound;i++){
 
 		checkHP(userChar,enemyChar,startingStatUser,startingStatEnemy,currentFight)
 
