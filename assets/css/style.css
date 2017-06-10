@@ -12,7 +12,7 @@ body{background-image: url("../images/background.jpg");}
 	width:200px;
 	border-radius: 10px;
 	position:absolute;
-	left:532px;
+	left:607px;
 }
 
 .gameContainer{
@@ -139,24 +139,37 @@ body{background-image: url("../images/background.jpg");}
 
 
 .fightProfile{
-
 	height:250px;
 	width:160px;
-	border:1px solid black;
-	margin:10px auto;
+	border:2px solid black;
+}
+
+#userChar_pic{
+	position:absolute;
+	top:20px;
+	left:-180px;
 
 }
+
+#enemyChar_pic{
+	position:absolute;
+	top:20px;
+	right:-190px;
+
+}
+
 
 .userChar_Stat{
 	border:1px solid black;
 	background: rgba(225,225,225,0.2);
+	width:240px;
 
 }
 
 .enemyChar_Stat{
 	border:1px solid black;
 	background: rgba(225,225,225,0.2);
-
+	width:240px;
 }
 
 #userChar_health,#enemyChar_health{
@@ -206,6 +219,8 @@ body{background-image: url("../images/background.jpg");}
 	
 	background: rgba(255,255,255,0.7);
 	border: 1px solid  black/*#ffe81f*/;
+
+
 }
 
 .optionBtn:hover{
@@ -221,7 +236,7 @@ body{background-image: url("../images/background.jpg");}
 
 .damageDisplay{
 	font-size:50px;
-	color:red;
+	color:white;
 	font-weight:bold;
 	position:absolute;
 	top:100px;
@@ -241,8 +256,8 @@ body{background-image: url("../images/background.jpg");}
 	height:250px;
 	width:160px;
 	position:absolute;
-	top:10px;
-	left:45px;
+	top:20px;
+	left:50px;
 }
 
 /*Win Screen CSS*/

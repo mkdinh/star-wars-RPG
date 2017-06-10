@@ -253,8 +253,14 @@ function forceThrow(userChar,enemyChar,startingStatUser,startingStatEnemy,curren
 		$('#enemyChar_health').html("HP:   "+ startingStatEnemy[0]);// console.log(+startingStatEnemy[0] +" "+currentEnemy + " " + damage)
 		$('#userChar_stamina').html("SP:   "+ startingStatUser[1]); 		
 		attackSound("force1");
-		damageDisplay(damage,"enemyChar")
-        $('.enemyChar_Pic').effect('shake');
+		damageDisplay(damage,"enemyChar");
+
+	//$(".enemyChar_Pic").toggle(function(){
+        $('.enemyChar_Pic').animate({right: '-300px'},100);
+        $('.enemyChar_Pic').animate({right: '02px'},500);
+        //$('.enemyChar_Pic').animate({width: '100%', height:'100%'},1000);
+      // })
+
         return startingStatEnemy
 	
 	}
@@ -274,7 +280,8 @@ function forceThrow(userChar,enemyChar,startingStatUser,startingStatEnemy,curren
 		$('#enemyChar_stamina').html("SP:   "+ startingStatEnemy[1]); 
 		attackSound("force1");
 		damageDisplay(damage,"userChar")
-            $('.userChar_Pic').effect('shake');	
+        $('.userChar_Pic').animate({left: '-300px'},500);
+        $('.userChar_Pic').animate({left: '-5px'},100);	
 	}
 
 	checkHP(userChar,enemyChar,startingStatUser,startingStatEnemy,currentFight)
@@ -520,7 +527,7 @@ function charScreen(userChar,allCharObj){
 		}
 
 		if(round === 1){
-		  	chooseBtn = '<button type="button" id="chooseBtn">Choose Your Fighter!</button>';
+		  	chooseBtn = '<button type="button" id="chooseBtn">Click on Your Fighter!</button>';
 			$("#charScreen").append(chooseBtn); 
 		}else{
 			$("#chooseBtn").remove();
@@ -551,7 +558,7 @@ function charScreen(userChar,allCharObj){
 	  			userChar = userChar[0];
 
 	  			$("#chooseBtn").remove();
-	  			chooseBtn = '<button type="button" id="chooseBtn">Choose Your Opponent!</button>';
+	  			chooseBtn = '<button type="button" id="chooseBtn">Click on Your Opponent!</button>';
 				$("#charScreen").append(chooseBtn);
 				}
 	
@@ -668,9 +675,11 @@ function fightScreen(userChar,enemyChar){
 				charContainer.append(fightProfile)
 				row.append(charContainer);
 				gameSect.append(row);
-
 			}
 		}
+
+		$("#userChar_pic").animate({left: '50px'},1000);
+       	$("#enemyChar_pic").animate({right: '40px'},1000);
 	}
 
 // Appending attack options
@@ -698,6 +707,7 @@ function fightScreen(userChar,enemyChar){
 	optionsContainer.append(saberBtn);
 	optionsContainer.append(forceBtn);
 	optionsContainer.append(defendBtn);
+
 }
 
 // Appending characters' stat
