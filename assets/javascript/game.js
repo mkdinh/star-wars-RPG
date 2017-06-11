@@ -23,7 +23,7 @@ var vader = {
 
 var palpatine = {
     name: "palpatine",
-    HP:450,
+    HP:50,
     SP:150,
     pic: "assets/images/palpatine.jpg",
     fightPic: "assets/images/palpatineFight.png"
@@ -478,7 +478,7 @@ function lose(){
         gameSect.attr("id","loseScreen")
         gameSect.empty();
 
-        loseDiv = '<div id="loseBtn">You were supposed to be the chosen one!</div>';
+        loseDiv = '<div id="loseBtn">You were supposed to be the chosen one!<br><p>Pick your opponent carefully</p>&</div>';
         $("#loseScreen").append(loseDiv); 
 
         restartBtn = '<button type="button" id="restartBtn">RESTART</button>';
@@ -616,24 +616,28 @@ function charScreen(userChar,allCharObj){
 //////////////////////////////////////////////////////////////////////////////
     
         click = 1;
-        characterSelected = false;
-
+        userCharSelected = false;
+        enemyCharSelected = false
         $(".profile").click(function(){
 // 1st Click select user character
 //////////////////////////////////////////////////////
             if(round === 1){   console.log(click)
-                if(userChar.length === 0){
-                    $(this).parent().css('box-shadow', '0px 0px 30px white');
-                    $(this).parent().css('border', '2px solid green');
+                if(userCharSelected === false){
+                    $(this).parent().css('box-shadow', '0px 0px 40px blue');
+                    $(this).parent().css('border', '2px solid blue');
                     $(this).css('opacity', '1');        
                     $(this).attr('role','userChar');
 
                     userChar.push(allCharObj[this.id]);
                     userChar = userChar[0];
                     $("#chooseBtn").remove();
-                    chooseBtn = '<button type="button" id="chooseBtn">Click on Your Opponent!</button>';
-                    $("#charScreen").append(chooseBtn);
-
+                    userCharSelected = true
+                    // if(enemyCharSelected !== undefined){
+                    //     UcharacterSelected = true;
+                    // }else{
+                        chooseBtn = '<button type="button" id="chooseBtn">Click on Your Opponent!</button>';
+                        $("#charScreen").append(chooseBtn);
+                    
                     attackSound("saberOn");
                 }else if ($(this).attr('role') === "userChar"){
                     $(this).parent().attr("style","")
@@ -641,9 +645,9 @@ function charScreen(userChar,allCharObj){
                     $(this).attr("role","")
                     userChar = [];
                     click = 0;
-                    characterSelected = false;
+                   userCharSelected = false;
                     $("#fightBtn").remove()
-                     $("#chooseBtn").remove()
+                    $("#chooseBtn").remove()
                     chooseBtn = '<button type="button" id="chooseBtn">Click on Your Fighter!</button>';
                     $("#charScreen").append(chooseBtn);
 
@@ -654,7 +658,7 @@ function charScreen(userChar,allCharObj){
                     $(this).attr("role","")
                     enemyChar = [];
                     click = 1;
-                    characterSelected = false;
+                    enemyCharSelected = false;
                     $("#fightBtn").remove()
                     $("#chooseBtn").remove()
                     chooseBtn = '<button type="button" id="chooseBtn">Click on Your Opponent!</button>';
@@ -666,22 +670,25 @@ function charScreen(userChar,allCharObj){
 
             else { 
                 if(click > 2 || $(this).attr('role') === "userChar"){return};
-                $(this).parent().css('box-shadow', '0px 0px 30px white');
+                $(this).parent().css('box-shadow', '0px 0px 40px red');
                 $(this).parent().css('border', '2px solid red');
                 $(this).css('opacity', '1');    
                 $(this).attr('role','enemyChar');
                 enemyChar.push(allCharObj[this.id]);
                 enemyChar = enemyChar[0];
-                characterSelected = true;
-
-                if(characterSelected === true){
-                    $("#chooseBtn").remove();
-                    fightBtn = '<button type="button" id="fightBtn">Fight</button>';
-                    $("#charScreen").append(fightBtn); 
-
-                }
+                enemyCharSelected = true;
 
                  attackSound("saberOn");
+            }
+
+            if(userCharSelected === true && enemyCharSelected === true){
+                $("#chooseBtn").remove();
+                fightBtn = '<button type="button" id="fightBtn">Fight</button>';
+                $("#charScreen").append(fightBtn); 
+            }
+            console.log(userCharSelected)
+            if(userCharSelected === false || enemyCharSelected === false){  
+                $("#fightBtn").remove()
             }
         }
 
@@ -701,7 +708,7 @@ function charScreen(userChar,allCharObj){
             }else{
                 if(click > 1){return};
                 
-                $(this).parent().css('box-shadow', '0px 0px 30px white');
+                $(this).parent().css('box-shadow', '0px 0px 40px red');
                 $(this).parent().css('border', '2px solid red');
                 $(this).css('opacity', '1');    
                 $(this).attr('role','enemyChar');
@@ -908,8 +915,6 @@ function fighting(userChar,enemyChar){
         startingStatUser =[];
         startingStatUser.push(currentUserHP);
         startingStatUser.push(currentUserSP);
-        console.log(userChar)
-        console.log(startingStatUser)
 
         startingStatEnemy.push(enemyChar.HP);
         startingStatEnemy.push(enemyChar.SP);

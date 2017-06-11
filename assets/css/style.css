@@ -100,7 +100,7 @@ body{
 	height:50px;
 	border:3px solid #ffe81f;
 	border-radius: 10px;
-	background: rgba(0,0,0,0.5);
+	background: rgba(0,0,0,0.8);
 
 	font-size:20px;
 	color: #fcdf2b;
@@ -126,7 +126,7 @@ body{
 	height:80px;
 	border:3px solid #ffe81f;
 	border-radius: 10px;
-	background: rgba(0,0,0,0.5);
+	background: rgba(0,0,0,1);
 
 	font-size:50px;
 	font-weight:bold;
@@ -386,7 +386,7 @@ body{
 	background: rgba(0,0,0,0.5);
 	padding: 20px 30px;
 
-	font-size:50px;
+	font-size:40px;
 	font-weight:bold;
 	color: #fcdf2b;
 	opacity:1;
