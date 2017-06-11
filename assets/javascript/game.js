@@ -7,7 +7,7 @@
 
 var luke = {
     name: "luke",
-    HP:20,
+    HP:10,
     SP:80,
     pic: "assets/images/luke.jpg",
     fightPic: "assets/images/lukeFight.png"
@@ -23,7 +23,7 @@ var vader = {
 
 var palpatine = {
     name: "palpatine",
-    HP:150,
+    HP:10,
     SP:150,
     pic: "assets/images/palpatine.jpg",
     fightPic: "assets/images/palpatineFight.png"
@@ -32,7 +32,7 @@ var palpatine = {
 
 var obiwan = {
     name: "obiwan",
-    HP:500,
+    HP:10,
     SP:100,
     pic: "assets/images/obiwan.jpg",
     fightPic: "assets/images/obiwanFight.png"
@@ -40,7 +40,7 @@ var obiwan = {
 
 var maul = {
     name: "maul",
-    HP:600,
+    HP:10,
     SP:50,
     pic: "assets/images/maul.png",
     fightPic: "assets/images/maulFight.png"
@@ -48,27 +48,21 @@ var maul = {
 
 var windu = {
     name: "windu",
-    HP:500,
+    HP:10,
     SP:100,
     pic: "assets/images/windu.jpg",
     fightPic: "assets/images/winduFight.png"
 }
 
 
-var allCharObj = {
-    luke: luke,
-    obiwan: obiwan,
-    windu: windu,
-    palpatine: palpatine,
-    vader: vader,
-    maul: maul,
-}
-
+    var allCharObj;
     var userChar;
     var enemyChar;
     var startingStatUser;
     var startingStatEnemy;
     var round ;
+    var currentUserHP;
+    var currentUserSP;
 
     var allChar;
     var totalRounds;
@@ -82,6 +76,15 @@ function initializeGame(){
     startingStatEnemy = [];
     round = 1;
     startGame = true;
+
+     allCharObj = {
+        luke: luke,
+        obiwan: obiwan,
+        windu: windu,
+        palpatine: palpatine,
+        vader: vader,
+        maul: maul,
+    }
 
     allChar = [obiwan,luke,windu,palpatine,vader,maul];
     totalRounds = allChar.length;
@@ -215,8 +218,7 @@ function saberAttack(userChar,enemyChar,startingStatUser,startingStatEnemy,curre
 
         startingStatEnemy[0] -= damage+ (5*round);
 
-
-        $('#enemyChar_health').html("HP:   "+ startingStatEnemy[0]);// console.log(+startingStatEnemy[0] +" "+currentEnemy + " " + damage)
+        $('#enemyChar_health').html("HP:   "+ startingStatEnemy[0]);
         $('#userChar_stamina').html("SP:   "+ startingStatUser[1]);         
         attackSound("clash");
         damageDisplay(damage,"enemyChar")
@@ -267,7 +269,7 @@ function forceThrow(userChar,enemyChar,startingStatUser,startingStatEnemy,curren
         startingStatEnemy[0] -= damage+ (10*round);
 
 
-        $('#enemyChar_health').html("HP:   "+ startingStatEnemy[0]);// console.log(+startingStatEnemy[0] +" "+currentEnemy + " " + damage)
+        $('#enemyChar_health').html("HP:   "+ startingStatEnemy[0]);
         $('#userChar_stamina').html("SP:   "+ startingStatUser[1]);         
         attackSound("force1");
         damageDisplay(damage,"enemyChar");
@@ -325,7 +327,7 @@ function brawls(userChar,enemyChar,startingStatUser,startingStatEnemy,currentFig
         startingStatEnemy[0] -= damage + (3*round);
 
 
-        $('#enemyChar_health').html("HP:   "+ startingStatEnemy[0]);// console.log(+startingStatEnemy[0] +" "+currentEnemy + " " + damage)
+        $('#enemyChar_health').html("HP:   "+ startingStatEnemy[0]);
         $('#userChar_stamina').html("SP:   "+ startingStatUser[1]);         
     
         damageDisplay(damage,"enemyChar")
@@ -437,7 +439,7 @@ function checkHP(userChar,enemyChar,startingStatUser,startingStatEnemy,currentFi
         $("#fightScreen").append(chooseBtn); 
 
         $("#winBtn").click(function(){
-            lose(); return
+            lose();
         })
     }
 
@@ -446,11 +448,22 @@ function checkHP(userChar,enemyChar,startingStatUser,startingStatEnemy,currentFi
         removeAttackOptions();
         chooseBtn = '<button type="button" id="winBtn">YOU WIN!</button>';
         $("#fightScreen").append(chooseBtn); 
+
+        var newStat = '<div id="newStatDiv"> <br>'
+        +"<p>Health: +50 HP ("+(parseInt(currentUserHP)+50)+")</p><br>"
+        +"<p>Stamina: +20 SP ("+(parseInt(currentUserHP)+50)+")</p><br>"
+        +"<p>Saber Attack: +5 ("+ 5*round+")</p><br>"
+        +"<p>Force Attack: +10 ("+ 10*round+")</p><br>"
+        +"<p>Duel Attack: +3 ("+ 3*round+")</p><br>"
+        +'</div>';
+
+        $("#fightScreen").append(newStat); 
         
         $("#winBtn").click(function(){
         if(round < totalRounds-1){
-            win(userChar,enemyChar,currentFight); console.log(totalRounds);
-        }else{finished()}
+            win(userChar,enemyChar,currentFight); 
+        }else{
+            finished()}
             
         }) // end of click function
 
@@ -481,6 +494,8 @@ function lose(){
         $("#restartBtn").click(function(){
             initializeGame()
             charScreen(userChar,allCharObj);
+            //start(userChar,allCharObj);
+
         })
 }
 
@@ -498,8 +513,8 @@ function finished(){
         fightAgainBtn = '<button type="button" id="fightAgainBtn">FIGHT AGAIN</button>';
         $("#finishedScreen").append(fightAgainBtn); 
 
-        $("#restartBtn").click(function(){
-            initializeGame()
+        $("#fightAgainBtn").click(function(){
+            initializeGame();
             start(userChar,allCharObj);
         })
 }
@@ -510,19 +525,31 @@ function finished(){
 //////////////////////////////////////////////////////////////////////////////////////
 
 function start(allChar,allCharObj){
+
     var startScreen = '<div class="col-lg-12 game" id="start">'    
-           +'<button type="button" id="startBtn">Start</button>'
            +'</div>';
 
+    $(".game").empty()
+
     $(".gameContainer").html(startScreen);
+
+        var startBtn = '<button type="button" id="startBtn">Start</button>'
+
+    $("#start").append(startBtn); 
+
+
+     $("body").prepend('<audio controls autoplay hidden loop id="background">'
+        +'<source src="assets/audio/theme.mp3">'
+        + '</audio>');
+
+    $("#startBtn").click(function(){
+        charScreen(userChar,allCharObj);
+    })
 }
 
 $( document ).ready(function(){
 
     start(allChar,allCharObj);
-    $("#startBtn").click(function(){
-        charScreen(userChar,allCharObj);
-    })
 
 });
 
@@ -593,7 +620,7 @@ function charScreen(userChar,allCharObj){
             attackSound("saberOn");
 // 1st Click select user character
 //////////////////////////////////////////////////////
-            if(round === 1){    
+            if(round === 1){   
                 if(userChar.length === 0){
                     $(this).parent().css('box-shadow', '0px 0px 30px white');
                     $(this).parent().css('border', '2px solid green');
@@ -627,8 +654,7 @@ function charScreen(userChar,allCharObj){
         }
 
         if(round > 1){
-
-            if(click == 2){return};
+            if(click > 1){return};
 
             $(this).parent().css('box-shadow', '0px 0px 30px white');
             $(this).parent().css('border', '2px solid red');
@@ -645,15 +671,6 @@ function charScreen(userChar,allCharObj){
 
 // Ready to go to fight screen
 //////////////////////////////////////////////////////
-
-        // if(click >= 3){
-        //  console.log(userChar[0].name + " " + this.id)
-        //  if(userChar[0].name === this.id || enemyChar[0].name === this.id){
-        //      var target= '#'+this.id;
-        //      $(this.id).removeAttr('style');
-        //      //$(this).parent().css('background', 'rgba(0,0,0,0.5)');
-        //  }
-        // }
 
         if(click <= 2){click++}
         else{click =1};         
@@ -782,10 +799,24 @@ function fightScreen(userChar,enemyChar){
                 continue; 
             }
 
-             // if(round == 1 && j === 0){
-             //     fighter.HP += 20;
-             //     fighter.SP += 10;
-             // }
+             if(round > 1 && j === 0){
+                var healthContainer = $("<div>");
+            var health = "HP:   "+ currentUserHP;
+            healthContainer.append(health);
+            healthContainer.attr('id',role[j] +"_health")
+            charContainer.append(healthContainer);
+            row.append(charContainer);
+            gameSect.append(row);
+
+
+            var staminaContainer = $("<div>");
+            var stamina = "SP:   "+ currentUserSP;
+            staminaContainer.append(stamina);
+            staminaContainer.attr('id',role[j]+"_stamina")
+            charContainer.append(staminaContainer)
+            row.append(charContainer);
+            gameSect.append(row); 
+            }else{
 
             var healthContainer = $("<div>");
             var health = "HP:   "+ fighter.HP;
@@ -802,7 +833,8 @@ function fightScreen(userChar,enemyChar){
             staminaContainer.attr('id',role[j]+"_stamina")
             charContainer.append(staminaContainer)
             row.append(charContainer);
-            gameSect.append(row);           
+            gameSect.append(row); 
+            }      
         }
     }
 
@@ -820,21 +852,16 @@ function fightScreen(userChar,enemyChar){
 ///////////////////////////////////////////////////////////////////////
 
 function fighting(userChar,enemyChar){
-    
-    if(round >1){
-        var newHP = userChar.HP + (20*round);
-        var newSP = userChar.SP + (10*round);
 
-        startingStatUser.push(newHP);
-        startingStatUser.push(newSP);
+    if(round ==1){
+        currentUserHP = userChar.HP;
+        currentUserSP = userChar.SP;
     }
-
-        startingStatUser.push(userChar.HP);
-        startingStatUser.push(userChar.SP);
-
-        console.log(userChar.HP + " " + userChar.SP )
-        console.log(newHP + " " + newSP )
-        console.log(luke)
+        startingStatUser =[];
+        startingStatUser.push(currentUserHP);
+        startingStatUser.push(currentUserSP);
+        console.log(userChar)
+        console.log(startingStatUser)
 
         startingStatEnemy.push(enemyChar.HP);
         startingStatEnemy.push(enemyChar.SP);
@@ -959,17 +986,24 @@ function removeAttackOptions(){
 
 function win(userChar,enemyChar,currentFight){
 
-    userCharInd = allChar.indexOf(userChar);
     enemyCharInd = allChar.indexOf(enemyChar);
 
+    allChar.splice(enemyCharInd,1);
+
     if(round === 1){
+        userCharInd = allChar.indexOf(userChar);
         allChar.splice(userCharInd,1);
     }
-    allChar.splice(enemyCharInd,1);
     delete allCharObj[enemyChar.name];
+
     enemyChar = [];
+    startingStatEnemy = [];
+
     userChar = currentFight[0];
-    
+    currentUserHP += 50;
+    currentUserSP += 20;
+
+    startGame = true;
     round++;
     console.log("This round is " + round )
     charScreen(userChar, allCharObj)

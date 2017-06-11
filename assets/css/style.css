@@ -1,4 +1,7 @@
-body{background-image: url("../images/background.jpg");}
+body{
+	background-image: url("../images/background.jpg");
+	font-family: "Rubik", cursive;	
+}
 .gameContainer{width:800px;margin:auto;}
 
 
@@ -47,9 +50,9 @@ body{background-image: url("../images/background.jpg");}
 	background: rgba(0,0,0,0.5);
 
 	font-size:50px;
-	font-weight:bold;
 	color: #fcdf2b;
 	opacity:.7;
+	font-family: 'Monoton', cursive;;
 }
 
 #startBtn:hover{
@@ -100,7 +103,6 @@ body{background-image: url("../images/background.jpg");}
 	background: rgba(0,0,0,0.5);
 
 	font-size:20px;
-	font-weight:bold;
 	color: #fcdf2b;
 	opacity:1;
 }
@@ -173,7 +175,7 @@ body{background-image: url("../images/background.jpg");}
 }
 
 #userChar_health,#enemyChar_health{
-	background-color:red;
+	background-color:#b80000;
 	font-size:20px;
 	font-weight:bold;
 	border-left: 1px solid black;
@@ -182,7 +184,7 @@ body{background-image: url("../images/background.jpg");}
 }
 
 #userChar_stamina,#enemyChar_stamina{
-	background-color: #70c0ff;
+	background-color: #1b00a7;
 	font-size:20px;
 	font-weight:bold;
 	border-left: 1px solid black;
@@ -214,10 +216,10 @@ body{background-image: url("../images/background.jpg");}
 	margin:10px;
 	width:200px;
 	height:60px;
-	font-size:20px;
+	font-size:19px;
 	font-weight:bold;
-	
-	background: rgba(255,255,255,0.7);
+	color:white;
+	background: rgba(0,0,0,0.7);
 	border: 1px solid  black/*#ffe81f*/;
 
 
@@ -283,6 +285,25 @@ body{background-image: url("../images/background.jpg");}
 	color: #fcdf2b;
 	opacity:1;
 }
+
+#newStatDiv{
+	position:absolute;
+	top:250px;
+	left:330px;
+	width:200px;
+	height:300px;
+}
+
+#newStatDiv p{	
+	color:white;
+	font-size:12px;
+	text-align: left;
+	line-height: 5px;
+	font-family:arial;
+	margin:0;
+}
+
+
 
 /*Finished Screen CSS*/
 
