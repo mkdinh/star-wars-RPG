@@ -7,7 +7,7 @@
 
 var luke = {
     name: "luke",
-    HP:10,
+    HP:500,
     SP:80,
     pic: "assets/images/luke.jpg",
     fightPic: "assets/images/lukeFight.png"
@@ -15,7 +15,7 @@ var luke = {
 
 var vader = {
     name: "vader",
-    HP:700,
+    HP:800,
     SP:100,
     pic: "assets/images/vader.jpg",
     fightPic: "assets/images/vaderFight.png"
@@ -23,7 +23,7 @@ var vader = {
 
 var palpatine = {
     name: "palpatine",
-    HP:10,
+    HP:450,
     SP:150,
     pic: "assets/images/palpatine.jpg",
     fightPic: "assets/images/palpatineFight.png"
@@ -32,7 +32,7 @@ var palpatine = {
 
 var obiwan = {
     name: "obiwan",
-    HP:10,
+    HP:750,
     SP:100,
     pic: "assets/images/obiwan.jpg",
     fightPic: "assets/images/obiwanFight.png"
@@ -40,21 +40,21 @@ var obiwan = {
 
 var maul = {
     name: "maul",
-    HP:10,
-    SP:50,
+    HP:600,
+    SP:80,
     pic: "assets/images/maul.png",
     fightPic: "assets/images/maulFight.png"
 }
 
 var windu = {
     name: "windu",
-    HP:10,
-    SP:100,
+    HP:550,
+    SP:75,
     pic: "assets/images/windu.jpg",
     fightPic: "assets/images/winduFight.png"
 }
 
-
+    var rank = ["Youngling","Pandawan","Knight","Master","Grand Master"]
     var allCharObj;
     var userChar;
     var enemyChar;
@@ -202,7 +202,7 @@ $.fn.timedDisable = function(time) {
 
 function saberAttack(userChar,enemyChar,startingStatUser,startingStatEnemy,currentFight){
 
-    var saberArray = damageArray(saber,10,30);
+    var saberArray = damageArray(saber,10,30+2*round);
     var damage = saberArray[Math.floor(Math.random() * saberArray.length)];
 
     var userInitialHP = userChar.HP;
@@ -216,12 +216,13 @@ function saberAttack(userChar,enemyChar,startingStatUser,startingStatEnemy,curre
 
         if (startingStatUser[1] < userInitialSP){startingStatUser[1] += (3+.5*round)}
 
-        startingStatEnemy[0] -= damage+ (5*round);
+        startingStatEnemy[0] -= damage + 5*round;
+        console.log(damage + ' + '+ (5 *round) + ' = ' + (damage + (5*round)))
 
         $('#enemyChar_health').html("HP:   "+ startingStatEnemy[0]);
         $('#userChar_stamina').html("SP:   "+ startingStatUser[1]);         
         attackSound("clash");
-        damageDisplay(damage,"enemyChar")
+        damageDisplay(damage+5*round,"enemyChar")
         damageArt("slashesD4","enemyChar") 
         return startingStatEnemy          
     }
@@ -247,7 +248,7 @@ function saberAttack(userChar,enemyChar,startingStatUser,startingStatEnemy,curre
 
 function forceThrow(userChar,enemyChar,startingStatUser,startingStatEnemy,currentFight){
 
-    var forceThrowArray = damageArray(forceThrow,30,50);
+    var forceThrowArray = damageArray(forceThrow,30,100+5*round);
     var damage = forceThrowArray[Math.floor(Math.random() * forceThrowArray.length)];
 
     var userInitialHP = userChar.HP;
@@ -266,17 +267,17 @@ function forceThrow(userChar,enemyChar,startingStatUser,startingStatEnemy,curren
         }
 
         startingStatUser[1] -= 20;  
-        startingStatEnemy[0] -= damage+ (10*round);
+        startingStatEnemy[0] -= (damage+ (10*round));
 
 
         $('#enemyChar_health').html("HP:   "+ startingStatEnemy[0]);
         $('#userChar_stamina').html("SP:   "+ startingStatUser[1]);         
         attackSound("force1");
-        damageDisplay(damage,"enemyChar");
+        damageDisplay((damage + 10 * round),"enemyChar");
 
     //$(".enemyChar_Pic").toggle(function(){
-        $('.enemyChar_Pic').animate({right: '-300px'},100);
-        $('.enemyChar_Pic').animate({right: '02px'},500);
+        $('#enemyChar_pic').animate({right: '-300px'},100);
+        $('#enemyChar_pic').animate({right: '40px'},500);
 
 
         return startingStatEnemy
@@ -286,7 +287,7 @@ function forceThrow(userChar,enemyChar,startingStatUser,startingStatEnemy,curren
 
     if(turn === 2){
 
-        if (startingStatEnemy[1] < 13){
+        if (startingStatEnemy[1] < 20){
             saberAttack(userChar,enemyChar,startingStatUser,startingStatEnemy,currentFight);
         return startingStatUser}
 
@@ -298,8 +299,8 @@ function forceThrow(userChar,enemyChar,startingStatUser,startingStatEnemy,curren
         $('#enemyChar_stamina').html("SP:   "+ startingStatEnemy[1]); 
         attackSound("force1");
         damageDisplay(damage,"userChar")
-        $('.userChar_Pic').animate({left: '-300px'},500);
-        $('.userChar_Pic').animate({left: '-5px'},100); 
+        $('#userChar_pic').animate({left: '-300px'},100);
+        $('#userChar_pic').animate({left: '45px'},500); 
     }
         return startingStatUser
 }
@@ -309,7 +310,7 @@ function forceThrow(userChar,enemyChar,startingStatUser,startingStatEnemy,curren
 
 function brawls(userChar,enemyChar,startingStatUser,startingStatEnemy,currentFight){
     
-    var brawlsArray = damageArray(brawls,1,30);
+    var brawlsArray = damageArray(brawls,1,30+1*round);
     var damage = brawlsArray[Math.floor(Math.random() * brawlsArray.length)];
 
     var userInitialHP = userChar.HP;
@@ -324,13 +325,12 @@ function brawls(userChar,enemyChar,startingStatUser,startingStatEnemy,currentFig
         if(startingStatUser[0] < 0 || startingStatEnemy[0] < 0){damage = 0}
 
         startingStatUser[1] -= 3;
-        startingStatEnemy[0] -= damage + (3*round);
-
+        startingStatEnemy[0] -= (damage + (3*round));
 
         $('#enemyChar_health').html("HP:   "+ startingStatEnemy[0]);
         $('#userChar_stamina').html("SP:   "+ startingStatUser[1]);         
     
-        damageDisplay(damage,"enemyChar")
+        damageDisplay((damage + 3*round),"enemyChar")
         damageArt("redslash","enemyChar")
         return startingStatEnemy
     }
@@ -357,44 +357,37 @@ function brawls(userChar,enemyChar,startingStatUser,startingStatEnemy,currentFig
 function randAttacks(userChar,enemyChar,startingStatUser,startingStatEnemy,currentFight){
 
     var ind = Math.floor(Math.random() * 100) + 1;
-    if(ind < 15){
+    if(ind < 75-1*round){
         forceThrow(userChar,enemyChar,startingStatUser,startingStatEnemy);
      }
-    if(ind >= 15 && ind <= 97){
+    if(ind >= 75-1*round && ind <= 93){
         saberAttack(userChar,enemyChar,startingStatUser,startingStatEnemy);
     } 
-    if(ind >97){
+    if(ind >93){
 
         time = 500;
         duelRound = Math.floor(Math.random() * 10) + 1;
         attackSound("Saber",duelRound);
 
-        for(i = 0; i <=round ;i++){
+        for(i = 1; i <= duelRound; i++){
 
-        checkHP(userChar,enemyChar,startingStatUser,startingStatEnemy,currentFight)
-    
+
         setTimeout(function () {
 
-                if(startingStatUser[0] < 0 || startingStatEnemy[0] < 0){return}
-                turn = 1;
-                
-                brawls(userChar,enemyChar,startingStatUser,startingStatEnemy,currentFight);
-            
-                turn = 2; 
+            if(startingStatEnemy[0] < 0 || startingStatUser[0] < 0){return}     
 
-        checkHP(userChar,enemyChar,startingStatUser,startingStatEnemy,currentFight)
+            turn = 1;
 
+            brawls(userChar,enemyChar,startingStatUser,startingStatEnemy,currentFight);
 
-                if(startingStatUser[0] < 0 || startingStatEnemy[0] < 0){return}
+            turn = 2; 
 
-                brawls(userChar,enemyChar,startingStatUser,startingStatEnemy,currentFight)
+            brawls(userChar,enemyChar,startingStatUser,startingStatEnemy,currentFight)
 
-                },time)
-
-        checkHP(userChar,enemyChar,startingStatUser,startingStatEnemy,currentFight)
-
-                if(startingStatEnemy[0] > 0 || startingStatUser[0] > 0){time += 500}else{break}     
-             
+            checkHP(userChar,enemyChar,startingStatUser,startingStatEnemy,currentFight)
+        },time);
+        
+        time +=500;
         }
     }   
 }
@@ -507,6 +500,11 @@ function finished(){
         gameSect.attr("id","finishedScreen")
         gameSect.empty();
 
+         $("body").prepend('<audio controls autoplay hidden loop id="background">'
+        +'<source src="assets/audio/ending.mp3">'
+        + '</audio>'
+        );
+
         finishedDiv = '<div id="loseBtn">Congratulation! <br> You have brought the balance to the Force!</div>';
         $("#finishedScreen").append(finishedDiv); 
 
@@ -525,7 +523,7 @@ function finished(){
 //////////////////////////////////////////////////////////////////////////////////////
 
 function start(allChar,allCharObj){
-
+    $("#background").remove();
     var startScreen = '<div class="col-lg-12 game" id="start">'    
            +'</div>';
 
@@ -606,6 +604,9 @@ function charScreen(userChar,allCharObj){
             $("#chooseBtn").remove();
             chooseBtn = '<button type="button" id="chooseBtn">Choose Your Next Opponent!</button>';
             $("#charScreen").append(chooseBtn);
+
+            rankDiv = '<div id="rankDiv"> Rank: '+rank[round-2]+'</div>';
+            $("#charScreen").append(rankDiv);
         }
     }
     
@@ -615,12 +616,12 @@ function charScreen(userChar,allCharObj){
 //////////////////////////////////////////////////////////////////////////////
     
         click = 1;
+        characterSelected = false;
 
         $(".profile").click(function(){
-            attackSound("saberOn");
 // 1st Click select user character
 //////////////////////////////////////////////////////
-            if(round === 1){   
+            if(round === 1){   console.log(click)
                 if(userChar.length === 0){
                     $(this).parent().css('box-shadow', '0px 0px 30px white');
                     $(this).parent().css('border', '2px solid green');
@@ -629,8 +630,33 @@ function charScreen(userChar,allCharObj){
 
                     userChar.push(allCharObj[this.id]);
                     userChar = userChar[0];
-
                     $("#chooseBtn").remove();
+                    chooseBtn = '<button type="button" id="chooseBtn">Click on Your Opponent!</button>';
+                    $("#charScreen").append(chooseBtn);
+
+                    attackSound("saberOn");
+                }else if ($(this).attr('role') === "userChar"){
+                    $(this).parent().attr("style","")
+                    $(this).attr("style","")
+                    $(this).attr("role","")
+                    userChar = [];
+                    click = 0;
+                    characterSelected = false;
+                    $("#fightBtn").remove()
+                     $("#chooseBtn").remove()
+                    chooseBtn = '<button type="button" id="chooseBtn">Click on Your Fighter!</button>';
+                    $("#charScreen").append(chooseBtn);
+
+
+                }else if ($(this).attr('role') === "enemyChar"){
+                    $(this).parent().attr("style","")
+                    $(this).attr("style","")
+                    $(this).attr("role","")
+                    enemyChar = [];
+                    click = 1;
+                    characterSelected = false;
+                    $("#fightBtn").remove()
+                    $("#chooseBtn").remove()
                     chooseBtn = '<button type="button" id="chooseBtn">Click on Your Opponent!</button>';
                     $("#charScreen").append(chooseBtn);
                 }
@@ -639,17 +665,23 @@ function charScreen(userChar,allCharObj){
 //////////////////////////////////////////////////////
 
             else { 
-                if(click > 2){return};
+                if(click > 2 || $(this).attr('role') === "userChar"){return};
                 $(this).parent().css('box-shadow', '0px 0px 30px white');
                 $(this).parent().css('border', '2px solid red');
                 $(this).css('opacity', '1');    
                 $(this).attr('role','enemyChar');
                 enemyChar.push(allCharObj[this.id]);
                 enemyChar = enemyChar[0];
+                characterSelected = true;
 
-                $("#chooseBtn").remove();
-                fightBtn = '<button type="button" id="fightBtn">Fight</button>';
-                $("#charScreen").append(fightBtn); 
+                if(characterSelected === true){
+                    $("#chooseBtn").remove();
+                    fightBtn = '<button type="button" id="fightBtn">Fight</button>';
+                    $("#charScreen").append(fightBtn); 
+
+                }
+
+                 attackSound("saberOn");
             }
         }
 
@@ -664,9 +696,11 @@ function charScreen(userChar,allCharObj){
             enemyChar.push(allCharObj[this.id]);
             enemyChar = enemyChar[0]
 
-                $("#chooseBtn").remove();
-            fightBtn = '<button type="button" id="fightBtn">Fight</button>';
-            $("#charScreen").append(fightBtn); 
+                if(characterSelected === true){
+                    $("#chooseBtn").remove();
+                    fightBtn = '<button type="button" id="fightBtn">Fight</button>';
+                    $("#charScreen").append(fightBtn); 
+                }
         }   
 
 // Ready to go to fight screen
@@ -963,7 +997,7 @@ function fighting(userChar,enemyChar){
             },time);
         
         time +=500;
-    }
+        }
 
 
     } // select brawl function ended

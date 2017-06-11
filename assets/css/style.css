@@ -107,6 +107,16 @@ body{
 	opacity:1;
 }
 
+#rankDiv{
+	position:absolute;
+	top:360px;
+	left:270px;
+	width:250px;
+	height:80px;
+	font-size:19px;
+	color: white;
+}
+
 
 #fightBtn{
 	position:absolute;
@@ -172,6 +182,11 @@ body{
 	border:1px solid black;
 	background: rgba(225,225,225,0.2);
 	width:240px;
+	margin-left:;
+}
+
+.options_Stat{
+	margin-left:4px;
 }
 
 #userChar_health,#enemyChar_health{
