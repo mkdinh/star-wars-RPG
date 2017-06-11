@@ -7,7 +7,7 @@
 
 var luke = {
     name: "luke",
-    HP:500,
+    HP:10,
     SP:80,
     pic: "assets/images/luke.jpg",
     fightPic: "assets/images/lukeFight.png"
@@ -686,16 +686,30 @@ function charScreen(userChar,allCharObj){
         }
 
         if(round > 1){
-            if(click > 1){return};
-
-            $(this).parent().css('box-shadow', '0px 0px 30px white');
-            $(this).parent().css('border', '2px solid red');
-            $(this).css('opacity', '1');    
-            $(this).attr('role','enemyChar');
-    
-            enemyChar.push(allCharObj[this.id]);
-            enemyChar = enemyChar[0]
-
+        if ($(this).attr('role') === "enemyChar"){
+                $(this).parent().attr("style","")
+                $(this).attr("style","")
+                $(this).attr("role","")
+                enemyChar = [];
+                click = 1;
+                characterSelected = false;
+                $("#fightBtn").remove()
+                $("#chooseBtn").remove()
+                chooseBtn = '<button type="button" id="chooseBtn">Click on Your Opponent!</button>';
+                $("#charScreen").append(chooseBtn);
+                click = 0;
+            }else{
+                if(click > 1){return};
+                
+                $(this).parent().css('box-shadow', '0px 0px 30px white');
+                $(this).parent().css('border', '2px solid red');
+                $(this).css('opacity', '1');    
+                $(this).attr('role','enemyChar');
+                
+                enemyChar.push(allCharObj[this.id]);
+                enemyChar = enemyChar[0]
+                characterSelected = true;        
+            }
                 if(characterSelected === true){
                     $("#chooseBtn").remove();
                     fightBtn = '<button type="button" id="fightBtn">Fight</button>';
