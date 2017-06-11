@@ -7,7 +7,7 @@
 
 var luke = {
     name: "luke",
-    HP:10,
+    HP:500,
     SP:80,
     pic: "assets/images/luke.jpg",
     fightPic: "assets/images/lukeFight.png"
