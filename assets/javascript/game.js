@@ -605,7 +605,7 @@ function charScreen(userChar,allCharObj){
             chooseBtn = '<button type="button" id="chooseBtn">Choose Your Next Opponent!</button>';
             $("#charScreen").append(chooseBtn);
 
-            rankDiv = '<div id="rankDiv"> Rank: '+rank[round-2]+'</div>';
+            rankDiv = '<div id="rankDiv"> Rank: '+rank[round-1]+'</div>';
             $("#charScreen").append(rankDiv);
         }
     }
