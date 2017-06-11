@@ -638,7 +638,7 @@ function charScreen(userChar,allCharObj){
                         chooseBtn = '<button type="button" id="chooseBtn">Click on Your Opponent!</button>';
                         $("#charScreen").append(chooseBtn);
                     
-                    attackSound("saberOn");
+                    attackSound("SaberOn");
                 }else if ($(this).attr('role') === "userChar"){
                     $(this).parent().attr("style","")
                     $(this).attr("style","")
@@ -678,7 +678,7 @@ function charScreen(userChar,allCharObj){
                 enemyChar = enemyChar[0];
                 enemyCharSelected = true;
 
-                 attackSound("saberOn");
+                 attackSound("SaberOn");
             }
 
             if(userCharSelected === true && enemyCharSelected === true){
@@ -717,7 +717,7 @@ function charScreen(userChar,allCharObj){
                 enemyChar.push(allCharObj[this.id]);
                 enemyChar = enemyChar[0]
                 characterSelected = true;   
-                attackSound("saberOn");     
+                attackSound("SaberOn");     
             }
                 if(characterSelected === true){
                     $("#chooseBtn").remove();
@@ -752,10 +752,10 @@ function fightScreen(userChar,enemyChar){
     gameSect.attr("id","fightScreen")
     gameSect.empty();
     options=[];
-    attackSound("saberOn");
+    attackSound("SaberOn");
     setTimeout(function () {
-            attackSound("saberOn")
-        },750)  
+            attackSound("SaberOn")
+        },1000)  
 
 // setting roles variables
 //////////////////////////////////////////////////////
