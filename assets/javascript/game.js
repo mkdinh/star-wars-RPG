@@ -23,7 +23,7 @@ var vader = {
 
 var palpatine = {
     name: "palpatine",
-    HP:50,
+    HP:450,
     SP:150,
     pic: "assets/images/palpatine.jpg",
     fightPic: "assets/images/palpatineFight.png"
