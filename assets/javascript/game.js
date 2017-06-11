@@ -444,7 +444,7 @@ function checkHP(userChar,enemyChar,startingStatUser,startingStatEnemy,currentFi
 
         var newStat = '<div id="newStatDiv"> <br>'
         +"<p>Health: +50 HP ("+(parseInt(currentUserHP)+50)+")</p><br>"
-        +"<p>Stamina: +20 SP ("+(parseInt(currentUserHP)+50)+")</p><br>"
+        +"<p>Stamina: +20 SP ("+(parseInt(currentUserSP)+20)+")</p><br>"
         +"<p>Saber Attack: +5 ("+ 5*round+")</p><br>"
         +"<p>Force Attack: +10 ("+ 10*round+")</p><br>"
         +"<p>Duel Attack: +3 ("+ 3*round+")</p><br>"
@@ -704,6 +704,7 @@ function charScreen(userChar,allCharObj){
                 $("#chooseBtn").remove()
                 chooseBtn = '<button type="button" id="chooseBtn">Click on Your Opponent!</button>';
                 $("#charScreen").append(chooseBtn);
+
                 click = 0;
             }else{
                 if(click > 1){return};
@@ -715,7 +716,8 @@ function charScreen(userChar,allCharObj){
                 
                 enemyChar.push(allCharObj[this.id]);
                 enemyChar = enemyChar[0]
-                characterSelected = true;        
+                characterSelected = true;   
+                attackSound("saberOn");     
             }
                 if(characterSelected === true){
                     $("#chooseBtn").remove();
