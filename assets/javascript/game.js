@@ -230,7 +230,7 @@ function saberAttack(userChar,enemyChar,startingStatUser,startingStatEnemy,curre
     if(turn === 2){
 
         if (startingStatEnemy[1] < enemyInitialSP){startingStatEnemy[1] += 3}
-        startingStatUser[0] -= damage;
+        startingStatUser[0] -= damage+3*round;
 
         $('#userChar_health').html("HP:   "+ startingStatUser[0]);  
         $('#enemyChar_stamina').html("SP:   "+ startingStatEnemy[1]); 
@@ -260,13 +260,13 @@ function forceThrow(userChar,enemyChar,startingStatUser,startingStatEnemy,curren
     if(turn === 1){
 
 
-        if (startingStatUser[1] < 20){
+        if (startingStatUser[1] < 20+2*round){
             saberAttack(userChar,enemyChar,startingStatUser,startingStatEnemy,currentFight);
             return startingStatEnemy;
         
         }
 
-        startingStatUser[1] -= 20;  
+        startingStatUser[1] -= 20+2*round;  
         startingStatEnemy[0] -= (damage+ (10*round));
 
 
@@ -287,12 +287,12 @@ function forceThrow(userChar,enemyChar,startingStatUser,startingStatEnemy,curren
 
     if(turn === 2){
 
-        if (startingStatEnemy[1] < 20){
+        if (startingStatEnemy[1] < 20+2*round){
             saberAttack(userChar,enemyChar,startingStatUser,startingStatEnemy,currentFight);
         return startingStatUser}
 
-        startingStatEnemy[1] -= 13; 
-        startingStatUser[0] -= damage;
+        startingStatEnemy[1] -= 20+2*round; 
+        startingStatUser[0] -= damage+6*round;
 
 
         $('#userChar_health').html("HP:   "+ startingStatUser[0]); 
@@ -321,10 +321,10 @@ function brawls(userChar,enemyChar,startingStatUser,startingStatEnemy,currentFig
 
     if(turn === 1){
 
-        if (startingStatUser[1] < 3){damage = 0;damageDisplay(damage,"enemyChar");return startingStatEnemy;}
+        if (startingStatUser[1] < 3+1*round){damage = 0;damageDisplay(damage,"enemyChar");return startingStatEnemy;}
         if(startingStatUser[0] < 0 || startingStatEnemy[0] < 0){damage = 0}
 
-        startingStatUser[1] -= 3;
+        startingStatUser[1] -= 3+1*round;
         startingStatEnemy[0] -= (damage + (3*round));
 
         $('#enemyChar_health').html("HP:   "+ startingStatEnemy[0]);
@@ -337,11 +337,11 @@ function brawls(userChar,enemyChar,startingStatUser,startingStatEnemy,currentFig
 
     if(turn === 2){
 
-        if (startingStatEnemy[1] < 3){damage = 0; damageDisplay(damage,"enemyChar");return startingStatUser;}
+        if (startingStatEnemy[1] < 3+1*round){damage = 0; damageDisplay(damage,"enemyChar");return startingStatUser;}
         if(startingStatUser[0] < 0 || startingStatEnemy[0] < 0){damage = 0}
 
-        startingStatEnemy[1] -= 3;
-        startingStatUser[0] -= damage;
+        startingStatEnemy[1] -= 3+1*round;
+        startingStatUser[0] -= damage+3*round;
 
         $('#userChar_health').html("HP:   "+ startingStatUser[0]); 
         $('#enemyChar_stamina').html("SP:   "+ startingStatEnemy[1]); 
@@ -357,13 +357,13 @@ function brawls(userChar,enemyChar,startingStatUser,startingStatEnemy,currentFig
 function randAttacks(userChar,enemyChar,startingStatUser,startingStatEnemy,currentFight){
 
     var ind = Math.floor(Math.random() * 100) + 1;
-    if(ind < 75-1*round){
+    if(ind < 25+2*round){
         forceThrow(userChar,enemyChar,startingStatUser,startingStatEnemy);
      }
-    if(ind >= 75-1*round && ind <= 93){
+    if(ind >= 25+2*round && ind <= 93-1.5*round){
         saberAttack(userChar,enemyChar,startingStatUser,startingStatEnemy);
     } 
-    if(ind >93){
+    if(ind >93-1.5*round){
 
         time = 500;
         duelRound = Math.floor(Math.random() * 10) + 1;
